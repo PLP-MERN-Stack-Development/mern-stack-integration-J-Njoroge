@@ -18,6 +18,10 @@ const PostSchema = new mongoose.Schema(
       type: String,
       default: 'default-post.jpg',
     },
+    // NEW: Multer upload path (e.g., "/uploads/abc123.jpg")
+    image: {
+      type: String,
+    },
     slug: {
       type: String,
       required: true,
@@ -35,7 +39,7 @@ const PostSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
-      required: true,
+      // Changed: NOT required – allows posts without category
     },
     tags: [String],
     isPublished: {
@@ -46,6 +50,7 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    // Embedded comments (kept for instructor compatibility)
     comments: [
       {
         user: {
@@ -71,12 +76,12 @@ PostSchema.pre('save', function (next) {
   if (!this.isModified('title')) {
     return next();
   }
-  
+
   this.slug = this.title
     .toLowerCase()
     .replace(/[^\w ]+/g, '')
     .replace(/ +/g, '-');
-    
+
   next();
 });
 
@@ -85,7 +90,7 @@ PostSchema.virtual('url').get(function () {
   return `/posts/${this.slug}`;
 });
 
-// Method to add a comment
+// Method to add a comment (embedded)
 PostSchema.methods.addComment = function (userId, content) {
   this.comments.push({ user: userId, content });
   return this.save();
@@ -97,4 +102,4 @@ PostSchema.methods.incrementViewCount = function () {
   return this.save();
 };
 
-module.exports = mongoose.model('Post', PostSchema); 
+module.exports = mongoose.model('Post', PostSchema);
