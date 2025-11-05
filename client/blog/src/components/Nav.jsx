@@ -11,20 +11,22 @@ export default function Nav() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 text-white flex justify-between">
-      <Link to="/" className="font-bold">Blog</Link>
-      <div className="space-x-4">
-        {user ? (
-          <>
-            <Link to="/create">New Post</Link>
-            <button onClick={handleLogout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </>
-        )}
+    <nav>
+      <div className="nav-inner">
+        <Link to="/" className="logo">Blog</Link>
+        <div className="nav-links">
+          {user ? (
+            <>
+              <Link to="/create">New Post</Link>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
