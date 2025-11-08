@@ -12,7 +12,7 @@ export default function App() {
   return (
     <AuthProvider>
       <PostProvider>
-        <Router>
+        <Router basename="/mern-stack-integration-J-Njoroge">
           <Nav />
           <div className="container mx-auto p-4">
             <Routes>
