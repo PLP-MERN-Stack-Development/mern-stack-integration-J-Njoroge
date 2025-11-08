@@ -374,3 +374,7 @@ This MERN stack blog application demonstrates a complete full-stack integration 
 **Date**: November 2025  
 **Technology Stack**: MERN (MongoDB, Express.js, React.js, Node.js)
 
+---
+### Screenshots
+![alt text](image.png)
+![alt text](image-1.png)
