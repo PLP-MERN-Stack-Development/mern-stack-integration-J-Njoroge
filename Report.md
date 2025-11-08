@@ -1,5 +1,11 @@
 # MERN Stack Blog Application - Project Report
 
+## 🌐 Live Demo
+
+**Live Application**: [https://plp-mern-stack-development.github.io/mern-stack-integration-J-Njoroge/](https://plp-mern-stack-development.github.io/mern-stack-integration-J-Njoroge/)
+
+The application is deployed on GitHub Pages and accessible via the link above.
+
 ## Project Overview
 
 This is a full-stack blog application built using the MERN (MongoDB, Express.js, React.js, Node.js) technology stack. The application provides a complete blogging platform where users can create, read, update, and delete blog posts, manage categories, add comments, and handle user authentication.
@@ -346,23 +352,51 @@ http://localhost:5173
 
 ## Production Deployment
 
-For production deployment:
+### Frontend Deployment (GitHub Pages)
 
+The frontend is deployed on GitHub Pages and is accessible at:
+**Live Application**: [https://plp-mern-stack-development.github.io/mern-stack-integration-J-Njoroge/](https://plp-mern-stack-development.github.io/mern-stack-integration-J-Njoroge/)
+
+**Deployment Steps:**
 1. Build the frontend:
    ```bash
    cd client/blog
    npm run build
    ```
 
-2. Set `NODE_ENV=production` in server `.env`
+2. Copy the contents of `dist/` folder to the repository root
 
-3. Use a process manager like PM2 for the Node.js server
+3. Configure `vite.config.js` with the correct base path:
+   ```js
+   base: '/mern-stack-integration-J-Njoroge/'
+   ```
 
-4. Configure proper MongoDB connection string
+4. Add `basename` to React Router in `App.jsx`:
+   ```jsx
+   <Router basename="/mern-stack-integration-J-Njoroge">
+   ```
 
-5. Set secure JWT_SECRET
+5. Create a `404.html` redirect file for client-side routing
 
-6. Configure proper CORS origins
+6. Commit and push to the main branch
+
+7. Enable GitHub Pages in repository Settings → Pages
+
+### Backend Deployment
+
+For backend production deployment:
+
+1. Set `NODE_ENV=production` in server `.env`
+
+2. Use a process manager like PM2 for the Node.js server
+
+3. Configure proper MongoDB connection string
+
+4. Set secure JWT_SECRET
+
+5. Configure proper CORS origins
+
+**Note**: The deployed frontend on GitHub Pages currently points to `localhost:5000` for API calls. For full functionality, the backend should be deployed separately (e.g., on Heroku, Railway, or Render) and the API base URL should be updated in the frontend configuration.
 
 ## Conclusion
 
