@@ -2,11 +2,15 @@
 
 import axios from 'axios';
 
+// Use relative URL when using Vite proxy, or full URL from env
+const baseURL = import.meta.env.VITE_API_URL || '/api';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 api.interceptors.request.use(
@@ -45,14 +49,16 @@ export const postService = {
     return response.data;
   },
   createPost: async (postData) => {
+    // Don't set Content-Type for FormData - browser will set it with boundary
     const response = await api.post('/posts', postData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': undefined },
     });
     return response.data;
   },
   updatePost: async (id, postData) => {
+    // Don't set Content-Type for FormData - browser will set it with boundary
     const response = await api.put(`/posts/${id}`, postData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': undefined },
     });
     return response.data;
   },
@@ -91,6 +97,12 @@ export const commentService = {
 export const authService = {
   register: async (userData) => {
     const response = await api.post('/auth/register', userData);
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      if (response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+    }
     return response.data;
   },
   login: async (credentials) => {

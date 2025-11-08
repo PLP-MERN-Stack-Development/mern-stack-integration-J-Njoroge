@@ -20,6 +20,11 @@ export const AuthProvider = ({ children }) => {
     setUser(data.user || authService.getCurrentUser());
   };
 
+  const setAuth = (token, user) => {
+    setToken(token);
+    setUser(user);
+  };
+
   const logout = () => {
     authService.logout();
     setToken(null);
@@ -27,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

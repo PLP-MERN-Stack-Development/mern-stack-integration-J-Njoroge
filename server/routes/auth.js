@@ -24,7 +24,7 @@ router.post(
       await user.save();
 
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token });
+      res.json({ token, user: { id: user._id, username: user.username } });
     } catch (e) { next(e); }
   }
 );

@@ -5,16 +5,25 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Register() {
   const { register, handleSubmit } = useForm();
-  const { login } = useAuth();
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      await authService.register(data);
-      await login(data);
-      navigate('/');
+      const response = await authService.register(data);
+      // Registration already stores token in localStorage via authService
+      // Update auth context state
+      if (response.token) {
+        setAuth(response.token, response.user);
+        navigate('/');
+      }
     } catch (e) {
-      alert('Registration failed');
+      console.error('Registration error:', e);
+      const errorMessage = e.response?.data?.message || 
+                          e.response?.data?.errors?.[0]?.msg || 
+                          e.message || 
+                          'Registration failed';
+      alert(`Registration failed: ${errorMessage}`);
     }
   };
 

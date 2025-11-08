@@ -13,7 +13,12 @@ export default function Login() {
       await login(data);
       navigate('/');
     } catch (e) {
-      alert('Login failed');
+      console.error('Login error:', e);
+      const errorMessage = e.response?.data?.message || 
+                          e.response?.data?.errors?.[0]?.msg || 
+                          e.message || 
+                          'Login failed';
+      alert(`Login failed: ${errorMessage}`);
     }
   };
 

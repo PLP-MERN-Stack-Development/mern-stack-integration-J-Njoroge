@@ -61,7 +61,7 @@ export default function SinglePost() {
             comments.map((c) => (
               <li key={c._id} className="border p-3 rounded">
                 <p className="text-sm text-gray-700">{c.content}</p>
-                <p className="text-xs text-gray-500">By {c.user?.username || 'Unknown'}</p>
+                <p className="text-xs text-gray-500">By {c.author?.username || 'Unknown'}</p>
               </li>
             ))
           ) : (
